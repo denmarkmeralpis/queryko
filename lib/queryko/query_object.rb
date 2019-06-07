@@ -115,7 +115,7 @@ module Queryko
     end
 
     def by_ids
-      relation.where(id: params[:ids])
+      relation.where(id: params[:ids].to_s.split(','))
     end
 
     def since_id
