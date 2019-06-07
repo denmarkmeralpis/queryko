@@ -20,6 +20,10 @@ RSpec.describe Queryko::QueryObject do
         add_range_attributes :created_at
         add_searchables :name
 
+        def lower_limit
+          2
+        end
+
         def self.name
           'ProductsQuery'
         end
