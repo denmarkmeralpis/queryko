@@ -1,4 +1,5 @@
 require "active_support/core_ext/class/attribute"
+require "queryko/configuration"
 require "queryko/range_attributes"
 require "queryko/searchables"
 require "queryko/after_attributes"
@@ -7,9 +8,11 @@ require "queryko/naming"
 module Queryko
   class QueryObject
     attr_reader :countable_resource
+    include Queryko::Configuration
     include Queryko::Naming
     include Queryko::RangeAttributes
     include Queryko::Searchables
+
     # include AfterAttributes
 
     def self.inherited(subclass)
@@ -116,7 +119,7 @@ module Queryko
     end
 
     def since_id
-      relation.where("\"#{defined_table_name}\".\"id\" > ?", params[:since_id])
+      relation.where("#{qoute}#{defined_table_name}#{qoute}.#{qoute}id#{qoute} > ?", params[:since_id])
     end
 
   end

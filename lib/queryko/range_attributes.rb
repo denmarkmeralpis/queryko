@@ -1,5 +1,9 @@
+require "queryko/configuration"
+
 module Queryko
   module RangeAttributes
+    include Queryko::Configuration
+
     def self.included(base)
       base.extend(ClassMethods)
       base.class_eval do
@@ -19,13 +23,13 @@ module Queryko
         def attribute_min key
           # Calm down. column_name is whitelisted. check #add_range_attributes method
           column_name = key.to_s.gsub(/_min$/, "")
-          relation.where("\"#{defined_table_name}\".\"#{column_name}\" >= ?", params[key.to_sym])
+          relation.where("#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{column_name}#{qoute} >= ?", params[key.to_sym])
         end
 
         def attribute_max key
           # Calm down. column_name is whitelisted. check #add_range_attributes method
           column_name = key.to_s.gsub(/_max$/, "")
-          relation.where("\"#{defined_table_name}\".\"#{column_name}\" <= ?", params[key.to_sym])
+          relation.where("#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{column_name}#{qoute} <= ?", params[key.to_sym])
         end
       end
     end
