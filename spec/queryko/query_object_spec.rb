@@ -44,7 +44,7 @@ RSpec.describe Queryko::QueryObject do
       it { expect(query.count).to eq(3) }
     end
     context 'using ids' do
-      let(:params) { { ids: [products[0].id, products[1].id] } }
+      let(:params) { { ids: "#{products[0].id},#{products[1].id}" } }
 
       it "filters query" do
         expect(query.count).to eq(2)
