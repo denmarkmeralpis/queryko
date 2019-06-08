@@ -7,4 +7,5 @@ gemspec
 
 group :test do
    gem 'mysql2'
+   gem 'byebug'
 end

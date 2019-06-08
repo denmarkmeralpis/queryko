@@ -2,6 +2,7 @@ require "active_support/core_ext/class/attribute"
 require "queryko/configuration"
 require "queryko/range_attributes"
 require "queryko/searchables"
+require "queryko/sortables"
 require "queryko/after_attributes"
 require "queryko/naming"
 
@@ -12,6 +13,7 @@ module Queryko
     include Queryko::Naming
     include Queryko::RangeAttributes
     include Queryko::Searchables
+    include Queryko::Sortables
 
     # include AfterAttributes
 
@@ -39,6 +41,7 @@ module Queryko
       filter
       filter_by_range_attributes
       filter_by_searchables
+      filter_by_sortables
       @countable_resource = relation
     end
 
