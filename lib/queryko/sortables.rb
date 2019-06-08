@@ -20,7 +20,7 @@ module Queryko
             self.relation = relation.reorder(Arel.sql(
               "#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{column_name}#{qoute} #{order}"
               )
-            ) if column_name
+            ) if params["sort_by_#{sortable}".to_sym]
           end
         end
       end
