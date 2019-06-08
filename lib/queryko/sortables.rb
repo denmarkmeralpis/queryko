@@ -17,7 +17,7 @@ module Queryko
             column_name = sortable.to_s.gsub(/sort_by_/, '')
             order = params["sort_by_#{sortable}".to_sym].to_s.downcase == 'asc' ? 'ASC' : 'DESC'
 
-            self.relation = relation.order(Arel.sql(
+            self.relation = relation.reorder(Arel.sql(
               "#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{column_name}#{qoute} #{order}"
               )
             ) if column_name
