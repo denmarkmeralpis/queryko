@@ -2,6 +2,7 @@ require "active_support/core_ext/class/attribute"
 require "queryko/configuration"
 require "queryko/range_attributes"
 require "queryko/searchables"
+require "queryko/findables"
 require "queryko/sortables"
 require "queryko/after_attributes"
 require "queryko/naming"
@@ -14,6 +15,7 @@ module Queryko
     include Queryko::RangeAttributes
     include Queryko::Searchables
     include Queryko::Sortables
+    include Queryko::Findables
 
     # include AfterAttributes
 
