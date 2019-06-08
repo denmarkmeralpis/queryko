@@ -13,7 +13,7 @@ module Queryko
             private
 
             def filter_by_findables
-               return self.relation unless params[:keyword]
+               return true unless params[:keyword]
 
                query_conditions = []
                self.findables.each do |findable|

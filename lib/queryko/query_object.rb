@@ -43,6 +43,7 @@ module Queryko
       filter
       filter_by_range_attributes
       filter_by_searchables
+      filter_by_findables
       filter_by_sortables
       @countable_resource = relation
     end
