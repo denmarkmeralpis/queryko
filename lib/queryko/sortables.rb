@@ -1,9 +1,5 @@
-require "queryko/configuration"
-
 module Queryko
   module Sortables
-    include Queryko::Configuration
-
     def self.included(base)
       base.extend(ClassMethods)
       base.class_eval do
@@ -18,7 +14,7 @@ module Queryko
             order = params["sort_by_#{sortable}".to_sym].to_s.downcase == 'asc' ? 'ASC' : 'DESC'
 
             self.relation = relation.reorder(Arel.sql(
-              "#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{column_name}#{qoute} #{order}"
+              "#{defined_table_name}.#{column_name} #{order}"
               )
             ) if params["sort_by_#{sortable}".to_sym]
           end

@@ -1,9 +1,5 @@
-require "queryko/configuration"
-
 module Queryko
    module Findables
-      include Queryko::Configuration
-
       def self.included(base)
          base.extend(ClassMethods)
          base.class_eval do
@@ -17,7 +13,7 @@ module Queryko
 
                query_conditions = []
                self.findables.each do |findable|
-                  query_conditions << "LOWER(#{qoute}#{defined_table_name}#{qoute}.#{qoute}#{findable}#{qoute}) LIKE :keyword"
+                  query_conditions << "LOWER(#{defined_table_name}.#{findable}) LIKE :keyword"
                end
 
                self.relation = relation.where(query_conditions.join(' OR '), keyword: "%#{params[:keyword]}%")
