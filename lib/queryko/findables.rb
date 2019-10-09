@@ -1,31 +1,31 @@
 module Queryko
-   module Findables
-      def self.included(base)
-         base.extend(ClassMethods)
-         base.class_eval do
-            class_attribute :findables, default: Array.new, instance_writer: false
-            self.findables = []
+	module Findables
+		def self.included(base)
+			base.extend(ClassMethods)
+			base.class_eval do
+				class_attribute :findables, default: Array.new, instance_writer: false
+				self.findables = []
 
-            private
+				private
 
-            def filter_by_findables
-               return true unless params[:keyword]
+				def filter_by_findables
+					return true unless params[:keyword]
 
-               query_conditions = []
-               self.findables.each do |findable|
-                  query_conditions << "LOWER(#{defined_table_name}.#{findable}) LIKE :keyword"
-               end
+					query_conditions = []
+					self.findables.each do |findable|
+						query_conditions << "LOWER(#{defined_table_name}.#{findable}) LIKE :keyword"
+					end
 
-               self.relation = relation.where(query_conditions.join(' OR '), keyword: "%#{params[:keyword]}%")
-            end
-         end
-      end
+					self.relation = relation.where(query_conditions.join(' OR '), keyword: "%#{params[:keyword]}%")
+				end
+			end
+		end
 
-      module ClassMethods
-         def add_findables(*args)
-            self.findables ||= []
-            self.findables += args
-         end
-      end
-   end
- end
+		module ClassMethods
+			def add_findables(*args)
+				self.findables ||= []
+				self.findables += args
+			end
+		end
+	end
+end

@@ -14,8 +14,7 @@ module Queryko
     include Queryko::Searchables
     include Queryko::Sortables
     include Queryko::Findables
-
-    # include AfterAttributes
+    include Queryko::AfterAttributes
 
     def self.inherited(subclass)
       # It should not be executed when using anonymous class
@@ -40,6 +39,7 @@ module Queryko
       pre_filter
       filter
       filter_by_range_attributes
+      filter_after_attributes
       filter_by_searchables
       filter_by_findables
       filter_by_sortables
