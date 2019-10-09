@@ -15,7 +15,7 @@ module Queryko
             self.relation = relation.where(
               "#{defined_table_name}.#{column} > :after",
               after: params["after_#{column}".to_sym]
-            )
+            ) if params["after_#{column}".to_sym]
           end
 				end
 			end
