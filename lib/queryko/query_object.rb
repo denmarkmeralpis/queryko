@@ -2,6 +2,7 @@ require "active_support/core_ext/class/attribute"
 require "queryko/range_attributes"
 require "queryko/searchables"
 require "queryko/findables"
+require "queryko/afterables"
 require "queryko/sortables"
 require "queryko/after_attributes"
 require "queryko/naming"
@@ -14,7 +15,9 @@ module Queryko
     include Queryko::Searchables
     include Queryko::Sortables
     include Queryko::Findables
-    include Queryko::AfterAttributes
+    include Queryko::Afterables
+
+    # include AfterAttributes
 
     def self.inherited(subclass)
       # It should not be executed when using anonymous class
@@ -39,7 +42,7 @@ module Queryko
       pre_filter
       filter
       filter_by_range_attributes
-      filter_after_attributes
+      filter_by_afterables
       filter_by_searchables
       filter_by_findables
       filter_by_sortables
