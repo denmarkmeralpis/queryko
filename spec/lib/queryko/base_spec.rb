@@ -22,6 +22,7 @@ RSpec.describe Queryko::Base do
     default_param :paginate, true
     default_param :limit, 10
     feature :id, :search, as: :id, cond: :eq
+    feature :status, :batch, as: :statuses
   end
 
   let(:accounts) do
@@ -46,6 +47,17 @@ RSpec.describe Queryko::Base do
     products
     accounts
   }
+
+  describe 'batching query using enum column' do
+    let(:params) { { statuses: 'deleted,inactive,archived' } }
+
+    before do
+      Account.create(status: 'inactive')
+      Account.create(status: 'archived')
+    end
+
+    it { expect(AccountsQuery.new(params).call.count).to eq(5) }
+  end
 
   describe 'cast enum str value to int' do
     context 'when cond is :eq' do
