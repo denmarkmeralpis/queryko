@@ -33,10 +33,12 @@ class Queryko::Filters::Search < Queryko::Filters::Base
   def token_enum_value(collection, token)
     class_enum = collection.try(column_name.to_s.pluralize)
 
-    if class_enum
+    if class_enum && class_enum[token.to_s]
       class_enum[token]
     else
       token
     end
+  rescue StandardError => e
+    token
   end
 end

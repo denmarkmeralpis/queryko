@@ -69,7 +69,7 @@ RSpec.describe Queryko::Base do
   end
 
   describe 'overriding table_name' do
-    let(:params) { { id: 1 } }
+    let(:params) { { id: Account.first.id } }
 
     it { expect(AccountsQuery.new(params).call.count).to eq(1) }
     it {
