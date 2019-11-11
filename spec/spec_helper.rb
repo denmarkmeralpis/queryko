@@ -16,6 +16,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
   config.before(:each) do
+    Account.delete_all
     Product.delete_all
   end
 end
