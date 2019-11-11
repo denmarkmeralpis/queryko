@@ -8,6 +8,8 @@ RSpec.describe Queryko::Base do
     feature :created_at, :max
     feature :name, :search, as: :name
     feature :paginate, :paginate, upper: 100, lower: 2
+    feature :status, :search, as: :status, cond: :eq
+    feature :status, :search, as: :keyword
   end
 
   class ProductsQuery < ApplicationQuery
@@ -25,7 +27,7 @@ RSpec.describe Queryko::Base do
   let(:accounts) do
     accounts =  []
     3.times do |i|
-      accounts << Account.create(name: "Sample#{i}")
+      accounts << Account.create(name: "Sample#{i}", status: 'deleted')
     end
     accounts
   end
@@ -44,6 +46,20 @@ RSpec.describe Queryko::Base do
     products
     accounts
   }
+
+  describe 'cast enum str value to int' do
+    context 'when cond is :eq' do
+      let(:params) { { status: 'deleted' } }
+
+      it { expect(AccountsQuery.new(params).call.count).to eq(3) }
+    end
+
+    context 'when cond is :like' do
+      let(:params) { { keyword: 'deleted' } }
+
+      it { expect(AccountsQuery.new(params).call.count).to eq(3) }
+    end
+  end
 
   describe 'naming' do
     let(:params) { { name: 'Sample1' } }
