@@ -3,7 +3,10 @@ require "queryko/filters/base"
 class Queryko::Filters::Order < Queryko::Filters::Base
 
   def perform(collection, token, query_object = nil)
-    collection.order("#{table_name}.#{column_name} #{filter_input(token)}", )
+    collection.order(
+      "#{table_name}.#{column_name} #{filter_input(token)},
+      #{table_name}.id #{filter_input(token)}"
+    )
   end
 
   def filter_input(token)
