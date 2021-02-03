@@ -8,6 +8,8 @@ RSpec.describe Queryko::Base do
     feature :created_at, :max
     feature :name, :search, as: :name
     feature :paginate, :paginate, upper: 100, lower: 2
+    feature :status, :search, as: :status, cond: :eq
+    feature :status, :search, as: :keyword
   end
 
   class ProductsQuery < ApplicationQuery
@@ -20,12 +22,13 @@ RSpec.describe Queryko::Base do
     default_param :paginate, true
     default_param :limit, 10
     feature :id, :search, as: :id, cond: :eq
+    feature :status, :batch, as: :statuses
   end
 
   let(:accounts) do
     accounts =  []
     3.times do |i|
-      accounts << Account.create(name: "Sample#{i}")
+      accounts << Account.create(name: "Sample#{i}", status: 'deleted')
     end
     accounts
   end
@@ -45,6 +48,31 @@ RSpec.describe Queryko::Base do
     accounts
   }
 
+  describe 'batching query using enum column' do
+    let(:params) { { statuses: 'deleted,inactive,archived' } }
+
+    before do
+      Account.create(status: 'inactive')
+      Account.create(status: 'archived')
+    end
+
+    it { expect(AccountsQuery.new(params).call.count).to eq(5) }
+  end
+
+  describe 'cast enum str value to int' do
+    context 'when cond is :eq' do
+      let(:params) { { status: 'deleted' } }
+
+      it { expect(AccountsQuery.new(params).call.count).to eq(3) }
+    end
+
+    context 'when cond is :like' do
+      let(:params) { { keyword: 'deleted' } }
+
+      it { expect(AccountsQuery.new(params).call.count).to eq(3) }
+    end
+  end
+
   describe 'naming' do
     let(:params) { { name: 'Sample1' } }
 
@@ -53,7 +81,7 @@ RSpec.describe Queryko::Base do
   end
 
   describe 'overriding table_name' do
-    let(:params) { { id: 1 } }
+    let(:params) { { id: Account.first.id } }
 
     it { expect(AccountsQuery.new(params).call.count).to eq(1) }
     it {
