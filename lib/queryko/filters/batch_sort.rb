@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require 'queryko/filters/base'
-require 'byebug'
 
 module Queryko
   module Filters
-    class BatchSort < ::Queryko::Filters::Base 
+    class BatchSort < ::Queryko::Filters::Base
       # format should be like this:
       # ==================================
       # {
@@ -18,7 +17,7 @@ module Queryko
       #     }
       #   }
       # }
-  
+
       def perform(collection, query_token, _)
         tokens = []
         query_token.each { |i, val| tokens[i.to_s.to_i] = val }
