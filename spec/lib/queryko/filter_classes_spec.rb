@@ -6,8 +6,7 @@ RSpec.describe Queryko::Naming do
       include Queryko::FilterClasses
     end
   end
-  let(:defined_filter_classes) { 9 }
-
+  let(:defined_filter_classes) { 10 }
   let(:query_object) { query_object_class.new }
   let(:initial_count) { query_object.filters.count }
 
