@@ -56,6 +56,39 @@ products = ProductsQuery.new(created_at_min: 'Jan 1, 2019').total_count
 products = ProductsQuery.new(name: 'Bag').total_count
 ```
 
+#### Batch Sort
+Sort multitple column
+
+Format:
+```json
+{
+  "sort_by": {
+    "0": { "name": "asc" },
+    "1": { "id": "desc" }
+  }
+}
+```
+
+#### Batch Sort with multi table
+Sorting records with multiple tables
+
+Format:
+```json
+{
+  "sort_by": {
+    "0": {
+      "classifications": {
+        "seq": "asc"
+      }
+    },
+    "1": {
+      "accounts": {
+        "seq": "desc"
+      }
+    }
+  }
+}
+```
 
 #### Object Methods
 - **count** - Returns the filtered count including pagination filter or the size of return object.
