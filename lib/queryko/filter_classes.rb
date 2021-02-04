@@ -11,6 +11,7 @@ require 'queryko/filters/order'
 require 'queryko/filters/batch'
 require 'queryko/filters/paginate'
 require 'queryko/filters/batch_sort'
+require 'queryko/filters/modified_search'
 
 module Queryko
   module FilterClasses
@@ -34,7 +35,8 @@ module Queryko
           order: 'Queryko::Filters::Order',
           batch: 'Queryko::Filters::Batch',
           paginate: 'Queryko::Filters::Paginate',
-          batch_sort: 'Queryko::Filters::BatchSort'
+          batch_sort: 'Queryko::Filters::BatchSort',
+          modified_search: 'Queryko::Filters::ModifiedSearch'
         }
       end
 
