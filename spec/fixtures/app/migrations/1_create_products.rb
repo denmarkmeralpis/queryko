@@ -5,6 +5,7 @@ class CreateProducts < ActiveRecord::Migration[5.1]
     create_table :products do |t|
       t.string 	:name
       t.string  :sku
+      t.boolean :out_of_stock
       t.timestamps
     end
   end
